@@ -9,24 +9,22 @@ public class MainPage {
     public MainPage(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
-    @FindBy()
-    WebElement ;
+    @FindBy(xpath = "//span[contains(text(),'Sales')]")
+    WebElement SalesButton;
 
-    @FindBy()
-    WebElement ;
+    @FindBy(xpath = "//span[contains(text(),'Proposals')]")
+    WebElement ProposalsButton;
 
-    @FindBy()
-    WebElement ;
+    @FindBy(xpath = "//a[@class='btn btn-primary pull-left display-block new-proposal-btn']")
+    WebElement NewProposalButton ;
 
-    @FindBy()
-    WebElement ;
-
-    @FindBy()
-    WebElement ;
-
-    @FindBy()
-    WebElement ;
-
+public void ClickProposals(){
+    SalesButton.click();
+    ProposalsButton.click();
+}
+public void addNewProposal() {
+    NewProposalButton.click();
+}
 
 
 }

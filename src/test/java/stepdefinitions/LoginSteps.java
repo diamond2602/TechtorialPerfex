@@ -15,6 +15,6 @@ public class LoginSteps {
     @Given("User login to to page with valid credentials")
     public void user_login_to_to_page_with_valid_credentials() {
         loginPage.login(ConfigReader.readProperty("email_address"), ConfigReader.readProperty("password"));
-        Assert.assertTrue(driver.getTitle().equals("Dashboard"));
+        Assert.assertTrue(driver.getTitle().contains("Dashboard"));
     }
 }

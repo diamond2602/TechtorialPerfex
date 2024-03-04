@@ -1,10 +1,14 @@
 package pages;
 
+import io.cucumber.java.en_old.Ac;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utils.BrowserUtils;
+
+import java.util.List;
 
 public class ProposalPage {
     public ProposalPage(WebDriver driver) {
@@ -17,8 +21,11 @@ public class ProposalPage {
     @FindBy(id = "rel_type")
     WebElement related;
 
+    @FindBy(xpath = "//a[@role='option']")
+    WebElement AllRelatedChoices;
+
     @FindBy(xpath = "//div[contains(text(),'Select and begin typing')]")
-    WebElement customer;
+    WebElement customerSearch;
 
     @FindBy(xpath = "//input[@placeholder='Type to search...']")
     WebElement typeToSearch;
@@ -26,6 +33,29 @@ public class ProposalPage {
     @FindBy(xpath = "//a[@id='bs-select-13-0']")
     WebElement CustomerName;
 
+    @FindBy(xpath = "//div[@id='bs-select-13']//span[@class='text']")
+    //@FindBy(xpath = "//select[@id=\"rel_id\"]")
+    List<WebElement> allCustomerNamesAfterSearch;
+
+
+@FindBy(xpath = "//button[@data-id=\"project_id\"]")
+WebElement projectSearch;
+
+//@FindBy(xpath = "//div[@id=\"bs-select-26\"]/preceding-sibling::div[@class=\"bs-searchbox\"]")
+@FindBy(xpath = "//*[@id=\"project_ajax_search_wrapper\"]/div/div/div[1]/input")
+WebElement projectTypeToSearch;
+
+@FindBy(xpath = "//div[@id='bs-select-16']//span[@class='text']")
+List<WebElement> allProjectNamesAfterSearch;
+
+@FindBy(xpath = "//div[contains(text(),'Add Item')]")
+ WebElement addItemButton;
+
+@FindBy(xpath = "//li[@class=\"optgroup-1\"]//span[@class=\"text\"]")
+List<WebElement> allItems;
+
+@FindBy(xpath = "//i[@class=\"fa fa-check\"]")
+WebElement blueButton;
 
     public void addSubject(String subjectMessage) {
         subject.sendKeys(subjectMessage);
@@ -36,10 +66,50 @@ public class ProposalPage {
         BrowserUtils.selectBy(related, relatedChoise, "text");
     }
 
-    public void selectCustomer(String customerSearchName, String customerName) {
-        customer.click();
+    public void selectCustomer( String customerSearchName, String customerName) throws InterruptedException {
+        customerSearch.click();
         typeToSearch.sendKeys(customerSearchName);
-        CustomerName.sendKeys(customerName);
+        Thread.sleep(1000);
+      //  CustomerName.sendKeys(customerName);
+        for (WebElement customer: allCustomerNamesAfterSearch){
+            if(BrowserUtils.getText(customer).equals(customerName)){
+                customer.click();
+               // BrowserUtils.selectBy(customer,customerName, "text");
+                break;
+            }
+        }
+
+    }
+    public void selectProject(String projectSearchName,String projectName) throws InterruptedException {
+        projectSearch.click();
+        Thread.sleep(500);
+        projectTypeToSearch.sendKeys(projectSearchName);
+        Thread.sleep(1000);
+        for (WebElement project: allProjectNamesAfterSearch){
+            if(BrowserUtils.getText(project).equals(projectName)){
+                project.click();
+                // BrowserUtils.selectBy(customer,customerName, "text");
+                break;
+            }
+        }
+    }
+    public void clickAddItem(){
+        addItemButton.click();
+    }
+    public void selectItem(String itemName) throws InterruptedException {
+        clickAddItem();
+        Thread.sleep(2000);
+        for (WebElement item: allItems){
+            if(BrowserUtils.getText(item).contains(itemName)){
+                item.click();
+                System.out.println(item.getText());
+                break;
+            }
+        }
+    }
+    public void clickBlueButton(WebDriver driver){
+       BrowserUtils.scrollWithJS(driver, blueButton);
+       blueButton.click();
 
     }
 }

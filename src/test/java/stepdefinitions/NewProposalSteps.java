@@ -13,13 +13,15 @@ public class NewProposalSteps {
     MainPage mainPage = new MainPage(driver);
     ProposalPage proposalPage = new ProposalPage(driver);
 
-    @When("User Clicks Sales Module from left side navigation menu and Proposals module")
-    public void user_clicks_module_from_left_side_navigation_menu_and_module() throws InterruptedException {
-        mainPage.ClickProposals();
+    @When("User Clicks {string} Module from left side navigation menu and {string} module")
+    public void user_clicks_module_from_left_side_navigation_menu_and_module(String moduleName, String salesOption) throws InterruptedException {
+        mainPage.SelectModule(moduleName);
+        Thread.sleep(500);
+        mainPage.SelectSalesOptions(salesOption);
     }
 
     @When("user clicks New Proposal button from the top")
-    public void user_clicks_button_from_the_top() {
+    public void user_clicks_button_from_the_top() throws InterruptedException {
         mainPage.addNewProposal();
     }
 
@@ -35,24 +37,25 @@ public class NewProposalSteps {
     }
 
     @When("user types {string} into the Customer filter and selects {string} from the results")
-    public void user_types_into_the_filter_and_selects_from_the_results(String customerSearchName, String customerName)  {
-proposalPage.selectCustomer(customerSearchName,customerName);
+    public void user_types_into_the_filter_and_selects_from_the_results(String customerSearchName, String customerName) throws InterruptedException {
+        proposalPage.selectCustomer(customerSearchName, customerName);
     }
 
-    @When("user types {string} into the {string} filter and selects {string}")
-    public void user_types_into_the_filter_and_selects(String string, String string2, String string3) {
-
+    @When("user types {string} into the Project filter and selects {string}")
+    public void user_types_into_the_filter_and_selects(String projectSearchName, String projectName) throws InterruptedException {
+        proposalPage.selectProject(projectSearchName, projectName);
     }
 
-    @When("user clicks {string} button and selects {string} from the dropdown list")
-    public void user_clicks_button_and_selects_from_the_dropdown_list(String string, String string2) {
-
+    @When("user clicks Add Item button and selects {string} from the dropdown list")
+    public void user_clicks_button_and_selects_from_the_dropdown_list(String itemName) throws InterruptedException {
+        proposalPage.selectItem(itemName);
     }
 
     @When("user clicks the blue check button to add the item")
     public void user_clicks_the_blue_check_button_to_add_the_item() {
-
+        proposalPage.clickBlueButton(driver);
     }
+
 
     @When("user changes the quantity of Ethernet Cable to {string}")
     public void user_changes_the_quantity_of_ethernet_cable_to(String string) {

@@ -9,23 +9,23 @@ public class MainPage {
     public MainPage(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
-    @FindBy()
-    WebElement ;
-
-    @FindBy()
-    WebElement ;
-
-    @FindBy()
-    WebElement ;
-
-    @FindBy()
-    WebElement ;
-
-    @FindBy()
-    WebElement ;
-
-    @FindBy()
-    WebElement ;
+//    @FindBy()
+//    WebElement ;
+//
+//    @FindBy()
+//    WebElement ;
+//
+//    @FindBy()
+//    WebElement ;
+//
+//    @FindBy()
+//    WebElement ;
+//
+//    @FindBy()
+//    WebElement ;
+//
+//    @FindBy()
+//    WebElement ;
 
 
 

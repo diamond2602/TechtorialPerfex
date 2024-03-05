@@ -3,6 +3,7 @@ package stepdefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import pages.MainPage;
 import pages.ProposalPage;
@@ -58,17 +59,17 @@ public class NewProposalSteps {
 
 
     @When("user changes the quantity of Ethernet Cable to {string}")
-    public void user_changes_the_quantity_of_ethernet_cable_to(String string) {
-
+    public void user_changes_the_quantity_of_ethernet_cable_to(String quantity) throws InterruptedException {
+        proposalPage.changeQuantity(quantity);
     }
 
     @Then("user verifies that the Total is {string}")
-    public void user_verifies_that_the_total_is(String string) {
-
+    public void user_verifies_that_the_total_is(String total) throws InterruptedException {
+        Assert.assertEquals(total, proposalPage.getTotal());
     }
 
-    @Then("user clicks {string} button")
-    public void user_clicks_button(String string) {
-
+    @Then("user clicks Save & Send button")
+    public void user_clicks_button() {
+        proposalPage.clickSaveAndSend();
     }
 }

@@ -13,22 +13,21 @@ public class NewProposalPage {
     }
 
 
-
-        @FindBy(xpath = "//div[@class='_buttons'] ")
-        WebElement newProposalBTN;
+    @FindBy(xpath = "//a[@class='btn btn-primary pull-left display-block new-proposal-btn']")
+    WebElement NewProposalButton ;
 
 
 
         public boolean btnIsVisible(){
 
-            return newProposalBTN.isDisplayed();
+            return NewProposalButton.isDisplayed();
         }
 
 
 
         public void colorValidation(String expectedColor){
 
-            Assert.assertEquals(expectedColor,newProposalBTN.getCssValue("background-color"));
+            Assert.assertEquals(expectedColor,NewProposalButton.getCssValue("background-color"));
         }
 
 

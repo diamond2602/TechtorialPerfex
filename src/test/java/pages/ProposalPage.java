@@ -38,24 +38,34 @@ public class ProposalPage {
     List<WebElement> allCustomerNamesAfterSearch;
 
 
-@FindBy(xpath = "//button[@data-id=\"project_id\"]")
-WebElement projectSearch;
+    @FindBy(xpath = "//button[@data-id=\"project_id\"]")
+    WebElement projectSearch;
 
-//@FindBy(xpath = "//div[@id=\"bs-select-26\"]/preceding-sibling::div[@class=\"bs-searchbox\"]")
-@FindBy(xpath = "//*[@id=\"project_ajax_search_wrapper\"]/div/div/div[1]/input")
-WebElement projectTypeToSearch;
+    //@FindBy(xpath = "//div[@id=\"bs-select-26\"]/preceding-sibling::div[@class=\"bs-searchbox\"]")
+    @FindBy(xpath = "//*[@id=\"project_ajax_search_wrapper\"]/div/div/div[1]/input")
+    WebElement projectTypeToSearch;
 
-@FindBy(xpath = "//div[@id='bs-select-16']//span[@class='text']")
-List<WebElement> allProjectNamesAfterSearch;
+    @FindBy(xpath = "//div[@id='bs-select-16']//span[@class='text']")
+    List<WebElement> allProjectNamesAfterSearch;
 
-@FindBy(xpath = "//div[contains(text(),'Add Item')]")
- WebElement addItemButton;
+    @FindBy(xpath = "//div[contains(text(),'Add Item')]")
+    WebElement addItemButton;
 
-@FindBy(xpath = "//li[@class=\"optgroup-1\"]//span[@class=\"text\"]")
-List<WebElement> allItems;
+    @FindBy(xpath = "//li[@class=\"optgroup-1\"]//span[@class=\"text\"]")
+    List<WebElement> allItems;
 
-@FindBy(xpath = "//i[@class=\"fa fa-check\"]")
-WebElement blueButton;
+    @FindBy(xpath = "//i[@class=\"fa fa-check\"]")
+    WebElement blueButton;
+
+
+    @FindBy(xpath = "//input[@name=\"quantity\"]")
+    WebElement quantity;
+
+    @FindBy(xpath = "//td[@class=\"total\"]")
+    WebElement total;
+
+    @FindBy(xpath = "//button[contains(text(),'Save & Send')]")
+    WebElement saveAndSendButton;
 
     public void addSubject(String subjectMessage) {
         subject.sendKeys(subjectMessage);
@@ -66,50 +76,75 @@ WebElement blueButton;
         BrowserUtils.selectBy(related, relatedChoise, "text");
     }
 
-    public void selectCustomer( String customerSearchName, String customerName) throws InterruptedException {
+    public void selectCustomer(String customerSearchName, String customerName) throws InterruptedException {
         customerSearch.click();
         typeToSearch.sendKeys(customerSearchName);
         Thread.sleep(1000);
-      //  CustomerName.sendKeys(customerName);
-        for (WebElement customer: allCustomerNamesAfterSearch){
-            if(BrowserUtils.getText(customer).equals(customerName)){
+        //  CustomerName.sendKeys(customerName);
+        for (WebElement customer : allCustomerNamesAfterSearch) {
+            if (BrowserUtils.getText(customer).equals(customerName)) {
                 customer.click();
-               // BrowserUtils.selectBy(customer,customerName, "text");
+                // BrowserUtils.selectBy(customer,customerName, "text");
                 break;
             }
         }
 
     }
-    public void selectProject(String projectSearchName,String projectName) throws InterruptedException {
+
+    public void selectProject(String projectSearchName, String projectName) throws InterruptedException {
         projectSearch.click();
         Thread.sleep(500);
         projectTypeToSearch.sendKeys(projectSearchName);
         Thread.sleep(1000);
-        for (WebElement project: allProjectNamesAfterSearch){
-            if(BrowserUtils.getText(project).equals(projectName)){
+        for (WebElement project : allProjectNamesAfterSearch) {
+            if (BrowserUtils.getText(project).equals(projectName)) {
                 project.click();
                 // BrowserUtils.selectBy(customer,customerName, "text");
                 break;
             }
         }
     }
-    public void clickAddItem(){
+
+    public void clickAddItem() {
         addItemButton.click();
     }
+
     public void selectItem(String itemName) throws InterruptedException {
+        Thread.sleep(500);
         clickAddItem();
-        Thread.sleep(2000);
-        for (WebElement item: allItems){
-            if(BrowserUtils.getText(item).contains(itemName)){
+        Thread.sleep(1000);
+        for (WebElement item : allItems) {
+            if (BrowserUtils.getText(item).contains(itemName)) {
                 item.click();
                 System.out.println(item.getText());
                 break;
             }
         }
     }
-    public void clickBlueButton(WebDriver driver){
-       BrowserUtils.scrollWithJS(driver, blueButton);
-       blueButton.click();
 
+    public void clickBlueButton(WebDriver driver) {
+        BrowserUtils.scrollWithJS(driver, blueButton);
+        blueButton.click();
+
+    }
+
+    public void changeQuantity(String quantity) throws InterruptedException {
+        Thread.sleep(500);
+        this.quantity.clear();
+        Thread.sleep(500);
+        this.quantity.sendKeys(quantity);
+        Thread.sleep(500);
+        subject.click();//clicking this place just to update quantity,
+        // this needs better implementation
+
+    }
+
+    public String getTotal() throws InterruptedException {
+        Thread.sleep(500);
+        return this.total.getText();
+
+    }
+    public void clickSaveAndSend(){
+        saveAndSendButton.click();
     }
 }

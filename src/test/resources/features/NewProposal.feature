@@ -1,7 +1,7 @@
 Feature: Testing Create New Proposal for a customer Functionality
 
   Scenario: Create a new proposal with specified details
-    Given User login to to page with valid credentials
+    When User provides email_address and password to the loginPage
     When User Clicks "Sales" Module from left side navigation menu and "Proposals" module
     And user clicks New Proposal button from the top
     And user fills the Subject line with 'almaz_Proposal_Test_TC5'
@@ -14,4 +14,4 @@ Feature: Testing Create New Proposal for a customer Functionality
     And user changes the quantity of Ethernet Cable to "2"
     And user clicks the blue check button to add the item
     Then user verifies that the Total is "$300.30"
-    And user clicks "Save & Send" button
+    And user clicks Save & Send button

@@ -9,12 +9,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utils.BrowserUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProposalPage {
     public ProposalPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);}
-
+        PageFactory.initElements(driver, this);
+    }
 
     @FindBy(id = "subject")
     WebElement subject;
@@ -75,6 +76,9 @@ public class ProposalPage {
         subject.sendKeys(subjectMessage);
 
     }
+
+    @FindBy(xpath = "//td")
+    List<WebElement> allCreatedProposalsDetails;
 
     public void selectRelated(String relatedChoise) {
         BrowserUtils.selectBy(related, relatedChoise, "text");
@@ -148,7 +152,8 @@ public class ProposalPage {
         return this.total.getText();
 
     }
-    public void clickSaveAndSend(){
+
+    public void clickSaveAndSend() {
         saveAndSendButton.click();
     }
 
@@ -160,5 +165,25 @@ public class ProposalPage {
     public void colorValidation(String expectedColor){
         Assert.assertEquals(expectedColor,NewProposalButton.getCssValue("background-color"));
     }
-}
 
+    public void validateAddedProposal(String status) {
+        List<String> allDetails = new ArrayList<>();
+        for (int i = 0; i < allCreatedProposalsDetails.size(); i++) {
+            allDetails.add(allCreatedProposalsDetails.get(i).getText());
+        }
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        ArrayList<String> currentGroup = new ArrayList<>();
+
+        for (String detail : allDetails) {
+            currentGroup.add(detail); // Add the sentence to the current group
+
+            if (currentGroup.size() == 5) { // If the current group contains 5 sentences
+                result.add(currentGroup); // Add it to the result
+                currentGroup = new ArrayList<>(); // Create a new group
+            }
+        }
+
+        Assert.assertEquals(status, result.get(0).get(4));
+
+    }
+}

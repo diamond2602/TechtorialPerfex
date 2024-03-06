@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,6 +9,8 @@ import org.openqa.selenium.WebDriver;
 import pages.MainPage;
 import pages.ProposalPage;
 import utils.DriverHelper;
+
+import java.util.Map;
 
 public class NewProposalSteps {
     WebDriver driver = DriverHelper.getDriver();
@@ -70,6 +73,31 @@ public class NewProposalSteps {
 
     @Then("user clicks Save & Send button")
     public void user_clicks_button() {
+        proposalPage.clickSaveAndSend();
+    }
+
+    @Then("Find created Proposal and verify that its status is {string}")
+    public void find_created_proposal_and_verify_that_its_status_is(String status) {
+        proposalPage.validateAddedProposal(status);
+    }
+
+
+
+    /////
+    @When("user creates new proposal with following data")
+    public void user_creates_new_proposal_with_following_data(DataTable dataTable) throws InterruptedException {
+        mainPage.addNewProposal();
+        Map<String, String> allDetails=dataTable.asMap();
+        proposalPage.addSubject(allDetails.get("subject"));
+        proposalPage.selectRelated(allDetails.get("related"));
+        proposalPage.selectCustomer(allDetails.get("customerSearch"),allDetails.get("customer"));
+        proposalPage.selectProject(allDetails.get("projectSearch"), allDetails.get("project"));
+        proposalPage.selectItem(allDetails.get("itemSelect1"));
+        proposalPage.clickBlueButton(driver);
+        proposalPage.selectItem(allDetails.get("itemSelect2"));
+        proposalPage.changeQuantity(allDetails.get("quantity"));
+        proposalPage.clickBlueButton(driver);
+        Assert.assertEquals(allDetails.get("total"), proposalPage.getTotal());
         proposalPage.clickSaveAndSend();
     }
 }

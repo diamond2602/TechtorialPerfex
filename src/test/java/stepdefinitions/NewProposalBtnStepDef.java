@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import pages.LoginPage;
 import pages.MainPage;
-import pages.NewProposalPage;
+import pages.ProposalPage;
 import utils.ConfigReader;
 import utils.DriverHelper;
 
@@ -16,7 +16,7 @@ public class NewProposalBtnStepDef {
     LoginPage loginPage = new LoginPage(driver);
     MainPage mainPage = new MainPage(driver);
 
-    NewProposalPage proposalPage = new NewProposalPage(driver);
+    ProposalPage proposalPage = new ProposalPage(driver);
     @Given("User provides username and password to the loginPage")
     public void user_provides_username_and_password_to_the_login_page() {
         loginPage.login(ConfigReader.readProperty("email_address"), ConfigReader.readProperty("password"));

@@ -11,30 +11,11 @@ public class MainPage {
         PageFactory.initElements(driver, this);
     }
 
-    //    @FindBy()
-//    WebElement ;
-//
-//    @FindBy()
-//    WebElement ;
-//
-//    @FindBy()
-//    WebElement ;
-//
-//    @FindBy()
-//    WebElement ;
-//
-//    @FindBy()
-//    WebElement ;
-//
     @FindBy(xpath = "//li[@class='menu-item-sales']")
     WebElement saleBtn;
 
     @FindBy(xpath = "//li[@class='sub-menu-item-proposals']")
     WebElement proposalsBtn;
-
-//    @FindBy(xpath = "//*[@id=\"wrapper\"]/div/div/div/div[2]/div[1]/div[1]/a[1]/i]")
-//    WebElement newProposalBTN;
-
 
     public void saleBtn() {
         saleBtn.click();
@@ -44,14 +25,5 @@ public class MainPage {
         proposalsBtn.click();
 
     }
-//
-//    public boolean proposalBtnIsDisplayed(){
-//        return newProposalBTN.isDisplayed();
-//    }
-//
-//    public void colorValidation(String expectedColor){
-//
-//        Assert.assertEquals(expectedColor,newProposalBTN.getCssValue("color"));
-//    }
 
 }

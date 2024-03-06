@@ -6,9 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class NewProposalPage {
+public class ProposalPage {
 
-    public NewProposalPage(WebDriver driver) {
+    public ProposalPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 
@@ -17,12 +17,10 @@ public class NewProposalPage {
     WebElement NewProposalButton ;
 
 
-
         public boolean btnIsVisible(){
 
             return NewProposalButton.isDisplayed();
         }
-
 
 
         public void colorValidation(String expectedColor){

@@ -23,13 +23,7 @@ public class NewProposalBtnStepDef {
 
     }
 
-    @When("User clicks Sales Module Button and user clicks Proposals Module Button")
-    public void user_clicks_sales_module_button_and_user_clicks_proposals_module_button() {
 
-        mainPage.salesBtn();
-        mainPage.proposalBtn();
-
-    }
 
     @Then("User validates that there a button New Proposal and background-color is {string}")
     public void user_validates_that_there_a_button_new_proposal_and_background_color_is(String expectedColor) {

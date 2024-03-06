@@ -17,10 +17,10 @@ public class Hook {
         driver.get(ConfigReader.readProperty("techtorial_CRM_URL"));
         //driver.get(ConfigReader.readProperty("smart_bear_url"));
     }
-
-    @After
-    public void tearDown(Scenario scenario){
-        //BrowserUtils.getScreenShotWithCucumber(driver, scenario);
-        driver.quit();
-    }
+//
+//    @After
+//    public void tearDown(Scenario scenario){
+//        //BrowserUtils.getScreenShotWithCucumber(driver, scenario);
+//        driver.quit();
+//    }
 }

@@ -1,6 +1,7 @@
 package pages;
 
 import io.cucumber.java.en_old.Ac;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utils.BrowserUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProposalPage {
@@ -71,6 +73,9 @@ public class ProposalPage {
         subject.sendKeys(subjectMessage);
 
     }
+
+    @FindBy(xpath = "//td")
+    List<WebElement> allCreatedProposalsDetails;
 
     public void selectRelated(String relatedChoise) {
         BrowserUtils.selectBy(related, relatedChoise, "text");
@@ -144,7 +149,29 @@ public class ProposalPage {
         return this.total.getText();
 
     }
-    public void clickSaveAndSend(){
+
+    public void clickSaveAndSend() {
         saveAndSendButton.click();
+    }
+
+    public void validateAddedProposal(String status) {
+        List<String> allDetails = new ArrayList<>();
+        for (int i = 0; i < allCreatedProposalsDetails.size(); i++) {
+            allDetails.add(allCreatedProposalsDetails.get(i).getText());
+        }
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        ArrayList<String> currentGroup = new ArrayList<>();
+
+        for (String detail : allDetails) {
+            currentGroup.add(detail); // Add the sentence to the current group
+
+            if (currentGroup.size() == 5) { // If the current group contains 5 sentences
+                result.add(currentGroup); // Add it to the result
+                currentGroup = new ArrayList<>(); // Create a new group
+            }
+        }
+
+        Assert.assertEquals(status, result.get(0).get(4));
+
     }
 }

@@ -26,7 +26,7 @@ public class NewProposalBtnStepDef {
     @When("User clicks Sales Module Button and user clicks Proposals Module Button")
     public void user_clicks_sales_module_button_and_user_clicks_proposals_module_button() {
 
-        mainPage.saleBtn();
+        mainPage.salesBtn();
         mainPage.proposalBtn();
 
     }

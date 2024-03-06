@@ -1,6 +1,6 @@
 package pages;
 
-import org.junit.Assert;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,7 +17,8 @@ public class MainPage {
     @FindBy(xpath = "//li[@class='sub-menu-item-proposals']")
     WebElement proposalsBtn;
 
-    public void saleBtn() {
+    public void salesBtn() {
+
         saleBtn.click();
     }
 

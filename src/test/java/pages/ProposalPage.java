@@ -69,6 +69,9 @@ public class ProposalPage {
     @FindBy(xpath = "//button[contains(text(),'Save & Send')]")
     WebElement saveAndSendButton;
 
+    @FindBy(xpath = "//a[@class='btn btn-primary pull-left display-block new-proposal-btn']")
+    WebElement NewProposalButton ;
+
     public void addSubject(String subjectMessage) {
         subject.sendKeys(subjectMessage);
 
@@ -152,6 +155,15 @@ public class ProposalPage {
 
     public void clickSaveAndSend() {
         saveAndSendButton.click();
+    }
+
+    public boolean btnIsVisible(){
+
+        return NewProposalButton.isDisplayed();
+    }
+
+    public void colorValidation(String expectedColor){
+        Assert.assertEquals(expectedColor,NewProposalButton.getCssValue("background-color"));
     }
 
     public void validateAddedProposal(String status) {

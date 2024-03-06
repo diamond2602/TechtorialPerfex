@@ -1,6 +1,7 @@
 package pages;
 
 import io.cucumber.java.en_old.Ac;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public class ProposalPage {
     public ProposalPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-    }
+        PageFactory.initElements(driver, this);}
+
 
     @FindBy(id = "subject")
     WebElement subject;
@@ -66,6 +67,9 @@ public class ProposalPage {
 
     @FindBy(xpath = "//button[contains(text(),'Save & Send')]")
     WebElement saveAndSendButton;
+
+    @FindBy(xpath = "//a[@class='btn btn-primary pull-left display-block new-proposal-btn']")
+    WebElement NewProposalButton ;
 
     public void addSubject(String subjectMessage) {
         subject.sendKeys(subjectMessage);
@@ -147,4 +151,14 @@ public class ProposalPage {
     public void clickSaveAndSend(){
         saveAndSendButton.click();
     }
+
+    public boolean btnIsVisible(){
+
+        return NewProposalButton.isDisplayed();
+    }
+
+    public void colorValidation(String expectedColor){
+        Assert.assertEquals(expectedColor,NewProposalButton.getCssValue("background-color"));
+    }
 }
+

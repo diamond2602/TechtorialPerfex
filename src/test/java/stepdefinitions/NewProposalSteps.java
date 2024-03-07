@@ -52,11 +52,11 @@ public class NewProposalSteps {
 
     @When("user clicks Add Item button and selects {string} from the dropdown list")
     public void user_clicks_button_and_selects_from_the_dropdown_list(String itemName) throws InterruptedException {
-        proposalPage.selectItem(itemName);
+        proposalPage.selectItem(itemName, driver);
     }
 
     @When("user clicks the blue check button to add the item")
-    public void user_clicks_the_blue_check_button_to_add_the_item() {
+    public void user_clicks_the_blue_check_button_to_add_the_item() throws InterruptedException {
         proposalPage.clickBlueButton(driver);
     }
 
@@ -92,9 +92,9 @@ public class NewProposalSteps {
         proposalPage.selectRelated(allDetails.get("related"));
         proposalPage.selectCustomer(allDetails.get("customerSearch"),allDetails.get("customer"));
         proposalPage.selectProject(allDetails.get("projectSearch"), allDetails.get("project"));
-        proposalPage.selectItem(allDetails.get("itemSelect1"));
+        proposalPage.selectItem(allDetails.get("itemSelect1"), driver);
         proposalPage.clickBlueButton(driver);
-        proposalPage.selectItem(allDetails.get("itemSelect2"));
+        proposalPage.selectItem(allDetails.get("itemSelect2"), driver);
         proposalPage.changeQuantity(allDetails.get("quantity"));
         proposalPage.clickBlueButton(driver);
         Assert.assertEquals(allDetails.get("total"), proposalPage.getTotal());

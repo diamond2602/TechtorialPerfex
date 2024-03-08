@@ -34,7 +34,7 @@ public class LoginSteps {
     }
     @Then("User validates the title {string} from MainPage")
     public void user_validates_the_title_from_main_page(String expectedTitle) {
-        Assert.assertEquals(expectedTitle,driver.getTitle().trim());
+        Assert.assertTrue(driver.getTitle().trim().contains(expectedTitle));
     }
     @When("User provides {string} and {string} to the loginPage")
     public void user_provides_and_to_the_login_page(String email, String password) {

@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import pages.MainPage;
 import pages.ProposalPage;
+import utils.ConfigReader;
 import utils.DriverHelper;
 
 import java.util.Map;
@@ -16,6 +17,12 @@ public class NewProposalSteps {
     WebDriver driver = DriverHelper.getDriver();
     MainPage mainPage = new MainPage(driver);
     ProposalPage proposalPage = new ProposalPage(driver);
+
+    @Given("navigate to Techtorial CRM url")
+    public void navigateToTechtorialCRMUrl() {
+        String url = ConfigReader.readProperty("techtorial_CRM_URL");
+        driver.get(url);
+    }
 
     @When("User Clicks {string} Module from left side navigation menu and {string} module")
     public void user_clicks_module_from_left_side_navigation_menu_and_module(String moduleName, String salesOption) throws InterruptedException {
@@ -100,4 +107,6 @@ public class NewProposalSteps {
         Assert.assertEquals(allDetails.get("total"), proposalPage.getTotal());
         proposalPage.clickSaveAndSend();
     }
+
+
 }

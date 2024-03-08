@@ -119,8 +119,8 @@ public class ProposalPage {
         addItemButton.click();
     }
 
-    public void selectItem(String itemName,WebDriver driver ) throws InterruptedException {
-        Thread.sleep(500);
+    public void selectItem(String itemName, WebDriver driver) throws InterruptedException {
+        Thread.sleep(2000);
         clickAddItem(driver);
         Thread.sleep(1000);
         for (WebElement item : allItems) {

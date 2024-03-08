@@ -15,6 +15,14 @@ public class VerifySubmodulesSteps {
     LoginPage loginPage = new LoginPage(driver);
     SubmodulesPage submodulesPage;
 
+    @Given("employee navigate to the url")
+    public void employee_navigate_to_the_url() {
+        String url = ConfigReader.readProperty("techtorial_CRM_URL");
+        driver.get(url);
+    }
+
+
+
 
     @When("employee enters correct login and password")
     public void employee_enters_correct_login_and_password() {

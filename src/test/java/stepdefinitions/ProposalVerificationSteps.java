@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
+import pages.DeleteProposal;
 import pages.LoginPage;
 import pages.ProposalVerificationPage;
 import utils.ConfigReader;
@@ -15,10 +16,11 @@ public class ProposalVerificationSteps {
     WebDriver driver = DriverHelper.getDriver();
     LoginPage loginPage = new LoginPage(driver);
     ProposalVerificationPage proposalVerificationPage = new ProposalVerificationPage(driver);
+    DeleteProposal deleteProposal = new DeleteProposal(driver);
 
-    @Given("the user navigates to the URL")
-    public void the_user_navigates_to_the_url() {
-        String url = ConfigReader.readProperty("techtorial_url");
+    @Given("the user navigates to the customer URL")
+    public void theUserNavigatesToTheCustomerURL() {
+        String url = ConfigReader.readProperty("customer_CRM_URL");
         driver.get(url);
     }
 
@@ -41,13 +43,14 @@ public class ProposalVerificationSteps {
 
     @When("the proposal with title {string} is in the list")
     public void the_proposal_with_title_is_in_the_list(String proposalTitle) {
-        proposalVerificationPage.verifyNeededProposal();
+        proposalVerificationPage.verifyNeededProposal(proposalTitle);
 
     }
 
     @When("the total for the proposal is {string}")
-    public void the_total_for_the_proposal_is(String Price) {
-        proposalVerificationPage.verifyProposalPrice();
+    public void the_total_for_the_proposal_is(String price) {
+
+        proposalVerificationPage.verifyProposalPrice(price);
     }
 
     @And("the user saves the proposal ID as {string} and clicks on the proposal with Proposal # equal to saved proposal id")
@@ -56,9 +59,9 @@ public class ProposalVerificationSteps {
 
     }
 
-    @Then("the {string} should match the value in the new page's {string} element")
-    public void the_should_match_the_value_in_the_new_page_s_element(String proposalId, String hFour) {
-        proposalVerificationPage.verifyFourHElement(proposalId);
+    @Then("the proposal should match the value in the new page h4 element")
+    public void theProposalShouldMatchTheValueInTheNewPageSHElement() {
+        proposalVerificationPage.verifyFourHElement();
     }
 
     @Then("the first item in the table should be {string}")
@@ -73,11 +76,13 @@ public class ProposalVerificationSteps {
 
     @Then("the page should have an {string} button")
     public void the_page_should_have_an_button(String acceptBtn) {
+
         proposalVerificationPage.verifyAcceptButton();
     }
 
     @When("the user clicks the {string} button")
     public void the_user_clicks_the_button(String string) {
+
         proposalVerificationPage.clickOnAccept();
     }
 
@@ -93,13 +98,19 @@ public class ProposalVerificationSteps {
 
     @And("the user draws a signature in the canvas and clicks the {string} button again")
     public void theUserDrawsASignatureInTheCanvasAndClicksTheButtonAgain(String arg0) throws InterruptedException {
-       proposalVerificationPage.signingTheCanvas();
-       proposalVerificationPage.clickOnSign();
+        proposalVerificationPage.signingTheCanvas();
+        proposalVerificationPage.clickOnSign();
     }
 
     @Then("a {string} status label with a green background should appear next to the proposal ID")
     public void a_status_label_with_a_green_background_should_appear_next_to_the_proposal_id(String acceptedlabel) {
         proposalVerificationPage.validateAcceptLabel();
+
+    }
+
+    @When("Click first Proposal number, More button, Delete and press OK in the confirmation pop up")
+    public void click_first_proposal_number_more_button_and_delete() {
+        deleteProposal.deleteProposal(driver);
 
     }
 

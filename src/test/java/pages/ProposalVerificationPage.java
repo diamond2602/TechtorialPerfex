@@ -1,6 +1,7 @@
 package pages;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.BrowserUtils;
 
 import java.time.Duration;
 import java.util.List;
@@ -27,17 +29,21 @@ public class ProposalVerificationPage {
     @FindBy(xpath = "//li[@class='customers-nav-item-proposals']")
     WebElement proposalBtn;
 
-    @FindBy(xpath = "//a[@class='td-proposal-url-subject' and contains(text(), 'Test')]")
+    @FindBy(css = ".td-proposal-url-subject")
     List<WebElement> proposalList;
 
-    @FindBy(xpath = "//a[@class='td-proposal-url-subject' and contains(text(), 'Test')]/parent::td/following-sibling::td[@data-order='300.30']")
+    //a[@class='td-proposal-url-subject' and contains(text(), 'Test')]/parent::td/following-sibling::td[@data-order='300.30']"
+    @FindBy(xpath = "//td[@data-order='300.30']")
     List<WebElement> priceList;
 
-    @FindBy(xpath = "//a[@class='td-proposal-url']")
+    @FindBy(css = ".td-proposal-url")
     List<WebElement> listOfProposalIds;
 
-    @FindBy(className = "proposal-html-number")
-    WebElement h4Element;
+    @FindBy(xpath = "//tr")
+    List<WebElement> rows;
+
+    @FindBy(xpath = "//h4[contains(text(),'PRO')]")
+    WebElement h4;
 
     @FindBy(css = "td.description")
     List<WebElement> laptopInfo;
@@ -57,8 +63,12 @@ public class ProposalVerificationPage {
     @FindBy(xpath = "//span[@class='label label-success tw-ml-4']")
     WebElement acceptLabel;
 
+    public String proposalId;
+
+
 
     public void verifyPageTitle(String expectedTitle){
+
 
         String actualtitle = driver.getTitle();
         Assert.assertEquals("Page title doesn't match the expected title", actualtitle, expectedTitle);
@@ -66,40 +76,40 @@ public class ProposalVerificationPage {
 
     public void clickOnProposal() {
         proposalBtn.click();
-//        for (WebElement element : headerList) {
-//            String actualButtonText = BrowserUtils.getText(element);
-//            if (actualButtonText.equals(expectedHeaderBtn)) {
-//                element.click();
-//            break;
-//        }
+
     }
 
-    public void verifyNeededProposal(){
-
+    public void verifyNeededProposal(String proposalTitle){
         for(WebElement neededProposal: proposalList){
-            if(neededProposal.getText().contains("almaz")){
-                neededProposal.isDisplayed();
+            if(neededProposal.getText().contains(proposalTitle)){
+                Assert.assertEquals(BrowserUtils.getText(neededProposal), proposalTitle);
             }
         }
     }
-    public void verifyProposalPrice(){
-
+    public void verifyProposalPrice(String price){
         for(WebElement neededPrice: priceList) {
-            if (neededPrice.getText().contains("$300.30")) {
-                neededPrice.isDisplayed();
+            if (neededPrice.getText().contains(price)) {
+                Assert.assertEquals(BrowserUtils.getText(neededPrice), price);
             }
         }
     }
 
     public void saveAndClickProposalId(String proposalId) {
 
+//        for (int i =1;i<= rows.size();i++) {
+//            WebElement subjectElement = rows.get(i).findElement(By.cssSelector(".td-proposal-url-subject"));
+//            if (subjectElement.getText().equals(proposalId)) {
+//                WebElement proposalNumberElement = rows.get(i).findElement(By.cssSelector(".td-proposal-url"));
+//                proposalId = proposalNumberElement.getText();
+//                System.out.println("Proposal number found: " + proposalId);
+//                break;
+//            }
+//        }
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfAllElements(listOfProposalIds));
-
+        wait.until(ExpectedConditions.visibilityOfAllElements(proposalList));
         WebElement targetProposal = null;
 
-        for(WebElement eachId: listOfProposalIds){
-
+        for(WebElement eachId: proposalList){
             if(eachId.getText().contains(proposalId)){
                 targetProposal = eachId;
                 break;
@@ -112,21 +122,11 @@ public class ProposalVerificationPage {
         }
     }
 
-    public void verifyFourHElement(String proposalId) {
-
-        String hFourElement = h4Element.getText();
-        String extractedValue = hFourElement.split("\\s+")[1];
-
-        if(extractedValue.equals(proposalId)){
-            System.out.println("Success. Element is within h4");
-        }
-        else{
-            System.out.println("Element was not found");
-        }
+    public void verifyFourHElement() {
+        Assert.assertTrue(h4.isDisplayed());
     }
 
     public void verifyFirstItem(String firstItem) {
-
         for(WebElement firstProductInfo: laptopInfo){
             if(firstProductInfo.equals(firstItem)){
                 firstProductInfo.isDisplayed();

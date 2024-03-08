@@ -80,6 +80,12 @@ public class ProposalPage {
     @FindBy(xpath = "//td")
     List<WebElement> allCreatedProposalsDetails;
 
+    @FindBy(xpath = "//select[@class='form-control input-sm']")
+    WebElement tableLengthList;
+
+    @FindBy(xpath = "//td//span[contains(text(), 'Accepted')]")
+    List<WebElement> acceptedStatusesList;
+
     public void selectRelated(String relatedChoise) {
         BrowserUtils.selectBy(related, relatedChoise, "text");
     }
@@ -186,4 +192,16 @@ public class ProposalPage {
         Assert.assertEquals(status, result.get(0).get(4));
 
     }
-}
+
+    public void setTableLengthList (String allOption){
+
+        BrowserUtils.selectBy(tableLengthList, allOption, "text" );
+    }
+    public void verifiedAcceptedStatus(String acceptedStatus) {
+        for (WebElement status : acceptedStatusesList) {
+                Assert.assertEquals(acceptedStatus, BrowserUtils.getText(status));
+        }
+
+    }
+
+    }

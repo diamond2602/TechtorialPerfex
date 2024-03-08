@@ -113,13 +113,14 @@ public class ProposalPage {
         }
     }
 
-    public void clickAddItem() {
+    public void clickAddItem(WebDriver driver)   {
+        BrowserUtils.scrollWithJS(driver, addItemButton);
         addItemButton.click();
     }
 
-    public void selectItem(String itemName) throws InterruptedException {
-        Thread.sleep(500);
-        clickAddItem();
+    public void selectItem(String itemName, WebDriver driver) throws InterruptedException {
+        Thread.sleep(2000);
+        clickAddItem(driver);
         Thread.sleep(1000);
         for (WebElement item : allItems) {
             if (BrowserUtils.getText(item).contains(itemName)) {
@@ -129,10 +130,9 @@ public class ProposalPage {
             }
         }
     }
-
-    public void clickBlueButton(WebDriver driver) {
-        BrowserUtils.scrollWithJS(driver, blueButton);
-        blueButton.click();
+    public void clickBlueButton(WebDriver driver){
+       BrowserUtils.scrollWithJS(driver, blueButton);
+       blueButton.click();
 
     }
 

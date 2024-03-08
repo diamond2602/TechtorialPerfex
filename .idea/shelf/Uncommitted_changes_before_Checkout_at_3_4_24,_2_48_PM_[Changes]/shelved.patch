@@ -1,0 +1,692 @@
+Index: src/test/java/utils/DriverHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package utils;\n\nimport org.openqa.selenium.WebDriver;\nimport org.openqa.selenium.chrome.ChromeDriver;\nimport org.openqa.selenium.chrome.ChromeOptions;\nimport org.openqa.selenium.edge.EdgeDriver;\nimport org.openqa.selenium.firefox.FirefoxDriver;\nimport org.openqa.selenium.remote.RemoteWebDriver;\n\nimport java.net.MalformedURLException;\nimport java.net.URL;\nimport java.time.Duration;\n\npublic class DriverHelper {\n    private static WebDriver driver;\n\n    private DriverHelper() {\n    }\n    //I make my constructor private because I do not want anyone to create an object\n    //and manipulate my driver from this class.\n\n    public static WebDriver getDriver() {\n        if (driver==null|| ((RemoteWebDriver)driver).getSessionId()==null) {\n            String browser=\"chrome\";\n            switch (browser){\n                case \"chrome\":\n                    driver= new ChromeDriver();\n                    break;\n                case \"firefox\":\n                    driver=new FirefoxDriver();\n                    break;\n                case \"edge\":\n                    driver=new EdgeDriver();\n                    break;\n                default:\n                    driver=new ChromeDriver();\n            }\n            driver.manage().window().maximize();\n            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));\n            driver.manage().deleteAllCookies();//make you fresh start\n        }\n        return driver;\n\n\n//    public static WebDriver getDriver() {\n//        if (driver == null || ((RemoteWebDriver) driver).getSessionId() == null) {\n//            String browser = \"chrome\";\n//\n//            switch (browser) {\n//\n//                case \"chrome\":\n//                    String hubURL = \"http://35.174.174.118:4444\";\n//                    ChromeOptions options = new ChromeOptions();\n//                    try {\n//                        driver = new RemoteWebDriver(new URL(hubURL), options);\n//                    } catch (MalformedURLException e) {\n//                        throw new RuntimeException(e);\n//                    }\n//                    break;\n//                case \"firefox\":\n//                    driver = new FirefoxDriver();\n//                    break;\n//                default:\n//                    ChromeOptions options1 = new ChromeOptions();\n//                    options1.addArguments(\"--remote-allow-origins=*\");\n//                    driver = new ChromeDriver(options1);\n//                    break;\n//            }\n//            driver.manage().window().maximize();\n//            //   driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));\n//        }\n//        return driver;\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/utils/DriverHelper.java b/src/test/java/utils/DriverHelper.java
+--- a/src/test/java/utils/DriverHelper.java	(revision cbba5b63f30f6084ad685b05a375913b023dcfb3)
++++ b/src/test/java/utils/DriverHelper.java	(date 1709585185798)
+@@ -2,16 +2,14 @@
+ 
+ import org.openqa.selenium.WebDriver;
+ import org.openqa.selenium.chrome.ChromeDriver;
+-import org.openqa.selenium.chrome.ChromeOptions;
+ import org.openqa.selenium.edge.EdgeDriver;
+ import org.openqa.selenium.firefox.FirefoxDriver;
+ import org.openqa.selenium.remote.RemoteWebDriver;
+ 
+-import java.net.MalformedURLException;
+-import java.net.URL;
+ import java.time.Duration;
+ 
+ public class DriverHelper {
++
+     private static WebDriver driver;
+ 
+     private DriverHelper() {
+@@ -41,34 +39,5 @@
+         }
+         return driver;
+ 
+-
+-//    public static WebDriver getDriver() {
+-//        if (driver == null || ((RemoteWebDriver) driver).getSessionId() == null) {
+-//            String browser = "chrome";
+-//
+-//            switch (browser) {
+-//
+-//                case "chrome":
+-//                    String hubURL = "http://35.174.174.118:4444";
+-//                    ChromeOptions options = new ChromeOptions();
+-//                    try {
+-//                        driver = new RemoteWebDriver(new URL(hubURL), options);
+-//                    } catch (MalformedURLException e) {
+-//                        throw new RuntimeException(e);
+-//                    }
+-//                    break;
+-//                case "firefox":
+-//                    driver = new FirefoxDriver();
+-//                    break;
+-//                default:
+-//                    ChromeOptions options1 = new ChromeOptions();
+-//                    options1.addArguments("--remote-allow-origins=*");
+-//                    driver = new ChromeDriver(options1);
+-//                    break;
+-//            }
+-//            driver.manage().window().maximize();
+-//            //   driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+-//        }
+-//        return driver;
+     }
+-}
+\ No newline at end of file
++}
+Index: src/test/resources/features/login.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>Feature: Testing the Login Functionality of smartbear Website\n\n  Scenario: Happy Path Login Functionality(Positive) for Techtorial CRM\n    Given User login to to page with valid credentials
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/resources/features/login.feature b/src/test/resources/features/login.feature
+--- a/src/test/resources/features/login.feature	(revision cbba5b63f30f6084ad685b05a375913b023dcfb3)
++++ b/src/test/resources/features/login.feature	(date 1709585185799)
+@@ -1,4 +1,32 @@
+ Feature: Testing the Login Functionality of smartbear Website
+ 
++  Background: Validates title and visibility of log_in
++    Given User validates the title is 'Techtorial CRM - Login' from LoginPage
++    And User validates the Log In is visible on the page
++
+   Scenario: Happy Path Login Functionality(Positive) for Techtorial CRM
+-    Given User login to to page with valid credentials
+\ No newline at end of file
++#    Given User validates the title is 'Techtorial CRM - Login' from LoginPage
++#    And User validates the Log In is visible on the page
++    When User provides email_address and password to the loginPage
++    Then User validates the title 'Dashboard' from MainPage
++
++
++  Scenario: Negative Login Functionality(Incorrect email and password) for Techtorial CRM
++#    Given User validates the title is 'Techtorial CRM - Login' from LoginPage
++#    And User validates the Log In is visible on the page
++    When User provides 'crm123@gmail.com' and '123456' to the loginPage
++    Then User validates the title 'Invalid email or password' and 'rgba(185, 28, 28, 1)' from loginPage
++
++#  navigate to url: Techtorial CRM - Login
++#  Verify the title is "Techtorial CRM - Login"
++#  Verify "Log In" is visiable on the page
++#  Enter correct employee email and password
++#  Click login button
++#  Verify title is "Dashboard"
++
++#  navigate to url: Techtorial CRM - Login
++#  Verify the title is "techtorial"
++#  Verify "Log In" is visiable on the page
++#  Enter incorrect employee email and password
++#  Click login button
++#  Verify error message is displayed "Invalid email or password" in red color.
+Index: src/test/java/stepdefinitions/LoginSteps.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package stepdefinitions;\n\nimport io.cucumber.java.en.Given;\nimport org.junit.Assert;\nimport org.openqa.selenium.WebDriver;\nimport pages.LoginPage;\nimport utils.BrowserUtils;\nimport utils.ConfigReader;\nimport utils.DriverHelper;\n\npublic class LoginSteps {\n    WebDriver driver = DriverHelper.getDriver();\n    LoginPage loginPage = new LoginPage(driver);\n\n    @Given(\"User login to to page with valid credentials\")\n    public void user_login_to_to_page_with_valid_credentials() {\n        loginPage.login(ConfigReader.readProperty(\"email_address\"), ConfigReader.readProperty(\"password\"));\n        Assert.assertTrue(driver.getTitle().equals(\"Dashboard\"));\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/stepdefinitions/LoginSteps.java b/src/test/java/stepdefinitions/LoginSteps.java
+--- a/src/test/java/stepdefinitions/LoginSteps.java	(revision cbba5b63f30f6084ad685b05a375913b023dcfb3)
++++ b/src/test/java/stepdefinitions/LoginSteps.java	(date 1709585185797)
+@@ -1,6 +1,8 @@
+ package stepdefinitions;
+ 
+ import io.cucumber.java.en.Given;
++import io.cucumber.java.en.Then;
++import io.cucumber.java.en.When;
+ import org.junit.Assert;
+ import org.openqa.selenium.WebDriver;
+ import pages.LoginPage;
+@@ -9,12 +11,39 @@
+ import utils.DriverHelper;
+ 
+ public class LoginSteps {
+-    WebDriver driver = DriverHelper.getDriver();
+-    LoginPage loginPage = new LoginPage(driver);
++      WebDriver driver = DriverHelper.getDriver();
++      LoginPage loginPage = new LoginPage(driver);
+ 
+-    @Given("User login to to page with valid credentials")
+-    public void user_login_to_to_page_with_valid_credentials() {
+-        loginPage.login(ConfigReader.readProperty("email_address"), ConfigReader.readProperty("password"));
+-        Assert.assertTrue(driver.getTitle().equals("Dashboard"));
++//    @Given("User login to to page with valid credentials") **ALMAZ
++//    public void user_login_to_to_page_with_valid_credentials() {
++//    loginPage.login(ConfigReader.readProperty("email_address"), ConfigReader.readProperty("password"));
++//    Assert.assertTrue(driver.getTitle().equals("Dashboard"));
++//    }
++    @Given("User validates the title is {string} from LoginPage")
++    public void user_validates_the_title_is_from_login_page(String expectedTitle) {
++        Assert.assertEquals(expectedTitle,driver.getTitle().trim() );
++}
++    @Given("User validates the Log In is visible on the page")
++    public void user_validates_the_log_in_is_visible_on_the_page() {
++        Assert.assertTrue(loginPage.isLoginVisible());
+     }
++    @When("User provides email_address and password to the loginPage")
++    public void user_provides_email_address_and_password_to_the_login_page() {
++        loginPage.login(ConfigReader.readProperty("email_address"),
++                ConfigReader.readProperty("password"));
++    }
++    @Then("User validates the title {string} from MainPage")
++    public void user_validates_the_title_from_main_page(String expectedTitle) {
++        Assert.assertEquals(expectedTitle,driver.getTitle().trim());
++    }
++    @When("User provides {string} and {string} to the loginPage")
++    public void user_provides_and_to_the_login_page(String email, String password) {
++        loginPage.login(email, password);
++    }
++    @Then("User validates the title {string} and {string} from loginPage")
++    public void user_validates_the_title_and_from_login_page(String errorMessage, String expectedColor) {
++        loginPage.errorMessageAndColor(errorMessage,expectedColor);
++    }
++
++
+ }
+Index: src/test/java/pages/MainPage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pages;\n\nimport org.openqa.selenium.WebDriver;\nimport org.openqa.selenium.WebElement;\nimport org.openqa.selenium.support.FindBy;\nimport org.openqa.selenium.support.PageFactory;\n\npublic class MainPage {\n    public MainPage(WebDriver driver){\n        PageFactory.initElements(driver,this);\n    }\n    @FindBy()\n    WebElement ;\n\n    @FindBy()\n    WebElement ;\n\n    @FindBy()\n    WebElement ;\n\n    @FindBy()\n    WebElement ;\n\n    @FindBy()\n    WebElement ;\n\n    @FindBy()\n    WebElement ;\n\n\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/pages/MainPage.java b/src/test/java/pages/MainPage.java
+--- a/src/test/java/pages/MainPage.java	(revision cbba5b63f30f6084ad685b05a375913b023dcfb3)
++++ b/src/test/java/pages/MainPage.java	(date 1709585185796)
+@@ -4,29 +4,43 @@
+ import org.openqa.selenium.WebElement;
+ import org.openqa.selenium.support.FindBy;
+ import org.openqa.selenium.support.PageFactory;
++import utils.BrowserUtils;
++
++import java.util.List;
+ 
+ public class MainPage {
+     public MainPage(WebDriver driver){
+         PageFactory.initElements(driver,this);
+     }
+-    @FindBy()
+-    WebElement ;
+-
+-    @FindBy()
+-    WebElement ;
+ 
+-    @FindBy()
+-    WebElement ;
++    @FindBy(xpath = "//span[@class='menu-text']")
++    List<WebElement> allModules;
+ 
+-    @FindBy()
+-    WebElement ;
++    @FindBy(xpath = "//li[@class='menu-item-sales active']//span[@class='sub-menu-text']")
++   List<WebElement> AllSalesOptions;
++    @FindBy(xpath = "//a[@class='btn btn-primary pull-left display-block new-proposal-btn']")
++    WebElement NewProposalButton ;
+ 
+-    @FindBy()
+-    WebElement ;
+-
+-    @FindBy()
+-    WebElement ;
+-
++public void SelectModule(String moduleName){
++    for (int i=0; i< allModules.size(); i++){
++        if(allModules.get(i).getText().trim().equals(moduleName)){
++            allModules.get(i).click();
++            break;
++        }
++    }
++}
++public void SelectSalesOptions(String salesOption){
++    for (WebElement option: AllSalesOptions){
++        if( option.getText().trim().equals(salesOption)){
++            option.click();
++            break;
++        }
++    }
++}
++public void addNewProposal() throws InterruptedException {
++    Thread.sleep(500);
++    NewProposalButton.click();
++}
+ 
+ 
+ }
+Index: src/test/java/stepdefinitions/Hook.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package stepdefinitions;\n\npublic class Hook {\n//    public WebDriver driver;\n//\n//    @Before// it must be imported from io.cucumber NOT from JUNIT ****\n//    public void setup(){\n//        driver= DriverHelper.getDriver();\n//        driver.get(ConfigReader.readProperty(\"techtorial_CRM_URL\"));\n//        //driver.get(ConfigReader.readProperty(\"smart_bear_url\"));\n//    }\n\n//    @After\n//    public void tearDown(Scenario scenario){\n//        //BrowserUtils.getScreenShotWithCucumber(driver, scenario);\n//        driver.quit();\n//    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/stepdefinitions/Hook.java b/src/test/java/stepdefinitions/Hook.java
+--- a/src/test/java/stepdefinitions/Hook.java	(revision cbba5b63f30f6084ad685b05a375913b023dcfb3)
++++ b/src/test/java/stepdefinitions/Hook.java	(date 1709585185797)
+@@ -10,9 +10,9 @@
+ //        //driver.get(ConfigReader.readProperty("smart_bear_url"));
+ //    }
+ 
+-//    @After
+-//    public void tearDown(Scenario scenario){
+-//        //BrowserUtils.getScreenShotWithCucumber(driver, scenario);
+-//        driver.quit();
+-//    }
++    @After
++    public void tearDown(Scenario scenario){
++        //BrowserUtils.getScreenShotWithCucumber(driver, scenario);
++        driver.quit();
++    }
+ }
+Index: src/test/java/stepdefinitions/VerifySubmodulesSteps.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/stepdefinitions/VerifySubmodulesSteps.java b/src/test/java/stepdefinitions/VerifySubmodulesSteps.java
+new file mode 100644
+--- /dev/null	(date 1709585185798)
++++ b/src/test/java/stepdefinitions/VerifySubmodulesSteps.java	(date 1709585185798)
+@@ -0,0 +1,48 @@
++package stepdefinitions;
++
++import io.cucumber.java.en.Given;
++import io.cucumber.java.en.Then;
++import io.cucumber.java.en.When;
++import org.openqa.selenium.WebDriver;
++import pages.LoginPage;
++import pages.SubmodulesPage;
++import utils.ConfigReader;
++import utils.DriverHelper;
++
++public class VerifySubmodulesSteps {
++
++    WebDriver driver = DriverHelper.getDriver();
++    LoginPage loginPage = new LoginPage(driver);
++    SubmodulesPage submodulesPage;
++
++    @Given("employee navigate to the url")
++    public void employee_navigate_to_the_url() {
++        String url = ConfigReader.readProperty("techtorial_CRM_URL");
++        driver.get(url);
++    }
++
++
++
++
++    @When("employee enters correct login and password")
++    public void employee_enters_correct_login_and_password() {
++        loginPage.login(ConfigReader.readProperty("email_address"), ConfigReader.readProperty("password"));
++
++    }
++    @When("the employee clicks on Sales button in navigation menu from lest side")
++    public void the_employee_clicks_on_sales_button_in_navigation_menu_from_lest_side() {
++        submodulesPage = new SubmodulesPage(driver);
++        submodulesPage.clickOnSalesButton();
++
++    }
++    @When("Employee can see all submodules and check their quantity")
++    public void employee_can_see_all_submodules_and_check_their_quantity() {
++        submodulesPage.getListOfSubmodules();
++
++    }
++    @Then("Employee can verify the right order of given submodules")
++    public void employee_can_verify_the_right_order_of_given_submodules() {
++        submodulesPage.validateTheRightOrder();
++
++    }
++}
+Index: src/test/resources/features/NewProposal.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>Feature: Testing Create New Proposal for a customer Functionality\n  Background: Navigation to the website\n    Given User navigates to 'https://techtorialperfex.com/'\n\n  Scenario: Happy Path Create New Proposal for a customer
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/resources/features/NewProposal.feature b/src/test/resources/features/NewProposal.feature
+--- a/src/test/resources/features/NewProposal.feature	(revision cbba5b63f30f6084ad685b05a375913b023dcfb3)
++++ b/src/test/resources/features/NewProposal.feature	(date 1709585185798)
+@@ -1,5 +1,17 @@
+ Feature: Testing Create New Proposal for a customer Functionality
+-  Background: Navigation to the website
+-    Given User navigates to 'https://techtorialperfex.com/'
+ 
+-  Scenario: Happy Path Create New Proposal for a customer
+\ No newline at end of file
++  Scenario: Create a new proposal with specified details
++    Given User login to to page with valid credentials
++    When User Clicks "Sales" Module from left side navigation menu and "Proposals" module
++    And user clicks New Proposal button from the top
++    And user fills the Subject line with 'almaz_Proposal_Test_TC5'
++    And user selects "Customer" from the Related dropdown
++    And user types "Apple" into the Customer filter and selects "Apple LLC" from the results
++    And user types "Apple" into the Project filter and selects "#1 - Apple Project - Apple LLC"
++    And user clicks Add Item button and selects "(253.00) Asus Monitor" from the dropdown list
++    And user clicks the blue check button to add the item
++    And user clicks Add Item button and selects "(10.00) Ethernet Cable" from the dropdown list
++    And user changes the quantity of Ethernet Cable to "2"
++    And user clicks the blue check button to add the item
++    Then user verifies that the Total is "$300.30"
++    And user clicks "Save & Send" button
+Index: src/test/java/stepdefinitions/NewProposalSteps.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/stepdefinitions/NewProposalSteps.java b/src/test/java/stepdefinitions/NewProposalSteps.java
+new file mode 100644
+--- /dev/null	(date 1709585185798)
++++ b/src/test/java/stepdefinitions/NewProposalSteps.java	(date 1709585185798)
+@@ -0,0 +1,74 @@
++package stepdefinitions;
++
++import io.cucumber.java.en.Given;
++import io.cucumber.java.en.Then;
++import io.cucumber.java.en.When;
++import org.openqa.selenium.WebDriver;
++import pages.MainPage;
++import pages.ProposalPage;
++import utils.DriverHelper;
++
++public class NewProposalSteps {
++    WebDriver driver = DriverHelper.getDriver();
++    MainPage mainPage = new MainPage(driver);
++    ProposalPage proposalPage = new ProposalPage(driver);
++
++    @When("User Clicks {string} Module from left side navigation menu and {string} module")
++    public void user_clicks_module_from_left_side_navigation_menu_and_module(String moduleName, String salesOption) throws InterruptedException {
++        mainPage.SelectModule(moduleName);
++        Thread.sleep(500);
++        mainPage.SelectSalesOptions(salesOption);
++    }
++
++    @When("user clicks New Proposal button from the top")
++    public void user_clicks_button_from_the_top() throws InterruptedException {
++        mainPage.addNewProposal();
++    }
++
++    @When("user fills the Subject line with {string}")
++    public void user_fills_the_subject_line_with(String subjectMessage) {
++        proposalPage.addSubject(subjectMessage);
++
++    }
++
++    @When("user selects {string} from the Related dropdown")
++    public void user_selects_from_the_dropdown(String relatedChoise) {
++        proposalPage.selectRelated(relatedChoise);
++    }
++
++    @When("user types {string} into the Customer filter and selects {string} from the results")
++    public void user_types_into_the_filter_and_selects_from_the_results(String customerSearchName, String customerName) throws InterruptedException {
++        proposalPage.selectCustomer(customerSearchName, customerName);
++    }
++
++    @When("user types {string} into the Project filter and selects {string}")
++    public void user_types_into_the_filter_and_selects(String projectSearchName, String projectName) throws InterruptedException {
++        proposalPage.selectProject(projectSearchName, projectName);
++    }
++
++    @When("user clicks Add Item button and selects {string} from the dropdown list")
++    public void user_clicks_button_and_selects_from_the_dropdown_list(String itemName) throws InterruptedException {
++        proposalPage.selectItem(itemName);
++    }
++
++    @When("user clicks the blue check button to add the item")
++    public void user_clicks_the_blue_check_button_to_add_the_item() {
++        proposalPage.clickBlueButton(driver);
++    }
++
++
++    @When("user changes the quantity of Ethernet Cable to {string}")
++    public void user_changes_the_quantity_of_ethernet_cable_to(String string) {
++
++    }
++
++    @Then("user verifies that the Total is {string}")
++    public void user_verifies_that_the_total_is(String string) {
++
++    }
++
++    @Then("user clicks {string} button")
++    public void user_clicks_button(String string) {
++
++    }
++}
+Index: src/test/java/pages/SubmodulesPage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/pages/SubmodulesPage.java b/src/test/java/pages/SubmodulesPage.java
+new file mode 100644
+--- /dev/null	(date 1709585185797)
++++ b/src/test/java/pages/SubmodulesPage.java	(date 1709585185797)
+@@ -0,0 +1,50 @@
++package pages;
++
++import org.junit.Assert;
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.support.FindBy;
++import org.openqa.selenium.support.PageFactory;
++import org.openqa.selenium.support.ui.ExpectedConditions;
++import org.openqa.selenium.support.ui.WebDriverWait;
++
++import java.time.Duration;
++import java.util.List;
++
++
++public class SubmodulesPage {
++
++    private WebDriver driver;
++
++    public SubmodulesPage(WebDriver driver) {
++        this.driver = driver;
++        PageFactory.initElements(driver, this);
++    }
++
++    @FindBy(xpath = "//span[contains(text(),'Sales')]")   //ul[contains(@class,'nav nav-second-level collapse in')]
++    private WebElement salesDropDown;
++
++    @FindBy(xpath = "//ul[contains(@class,'nav nav-second-level collapse in')]//li[contains(@class,'sub-menu-item')]")
++    private List<WebElement> listOfSubmodules;
++
++    public void clickOnSalesButton() {
++        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
++        wait.until(ExpectedConditions.visibilityOf(salesDropDown)).click();
++
++
++    }
++    public void getListOfSubmodules() {
++        int expectedNumberOfSubmodules = 6;
++        Assert.assertEquals("Quantity is not matching", expectedNumberOfSubmodules, listOfSubmodules.size());
++    }
++
++    public void validateTheRightOrder(){
++        String[] expectedSubmodulesOrder = {"Proposals", "Estimates", "Invoices", "Payments", "Credit Notes", "Items"};
++
++        for (int i = 0; i < expectedSubmodulesOrder.length; i++) {
++            String actualSubmoduleName = listOfSubmodules.get(i).getText();
++            Assert.assertEquals("Submodule order is incorrect", expectedSubmodulesOrder[i], actualSubmoduleName);
++        }
++    }
++}
+Index: src/test/java/pages/ProposalPage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/pages/ProposalPage.java b/src/test/java/pages/ProposalPage.java
+new file mode 100644
+--- /dev/null	(date 1709585185797)
++++ b/src/test/java/pages/ProposalPage.java	(date 1709585185797)
+@@ -0,0 +1,115 @@
++package pages;
++
++import io.cucumber.java.en_old.Ac;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.interactions.Actions;
++import org.openqa.selenium.support.FindBy;
++import org.openqa.selenium.support.PageFactory;
++import utils.BrowserUtils;
++
++import java.util.List;
++
++public class ProposalPage {
++    public ProposalPage(WebDriver driver) {
++        PageFactory.initElements(driver, this);
++    }
++
++    @FindBy(id = "subject")
++    WebElement subject;
++
++    @FindBy(id = "rel_type")
++    WebElement related;
++
++    @FindBy(xpath = "//a[@role='option']")
++    WebElement AllRelatedChoices;
++
++    @FindBy(xpath = "//div[contains(text(),'Select and begin typing')]")
++    WebElement customerSearch;
++
++    @FindBy(xpath = "//input[@placeholder='Type to search...']")
++    WebElement typeToSearch;
++
++    @FindBy(xpath = "//a[@id='bs-select-13-0']")
++    WebElement CustomerName;
++
++    @FindBy(xpath = "//div[@id='bs-select-13']//span[@class='text']")
++    //@FindBy(xpath = "//select[@id=\"rel_id\"]")
++    List<WebElement> allCustomerNamesAfterSearch;
++
++
++@FindBy(xpath = "//button[@data-id=\"project_id\"]")
++WebElement projectSearch;
++
++//@FindBy(xpath = "//div[@id=\"bs-select-26\"]/preceding-sibling::div[@class=\"bs-searchbox\"]")
++@FindBy(xpath = "//*[@id=\"project_ajax_search_wrapper\"]/div/div/div[1]/input")
++WebElement projectTypeToSearch;
++
++@FindBy(xpath = "//div[@id='bs-select-16']//span[@class='text']")
++List<WebElement> allProjectNamesAfterSearch;
++
++@FindBy(xpath = "//div[contains(text(),'Add Item')]")
++ WebElement addItemButton;
++
++@FindBy(xpath = "//li[@class=\"optgroup-1\"]//span[@class=\"text\"]")
++List<WebElement> allItems;
++
++@FindBy(xpath = "//i[@class=\"fa fa-check\"]")
++WebElement blueButton;
++
++    public void addSubject(String subjectMessage) {
++        subject.sendKeys(subjectMessage);
++
++    }
++
++    public void selectRelated(String relatedChoise) {
++        BrowserUtils.selectBy(related, relatedChoise, "text");
++    }
++
++    public void selectCustomer( String customerSearchName, String customerName) throws InterruptedException {
++        customerSearch.click();
++        typeToSearch.sendKeys(customerSearchName);
++        Thread.sleep(1000);
++      //  CustomerName.sendKeys(customerName);
++        for (WebElement customer: allCustomerNamesAfterSearch){
++            if(BrowserUtils.getText(customer).equals(customerName)){
++                customer.click();
++               // BrowserUtils.selectBy(customer,customerName, "text");
++                break;
++            }
++        }
++
++    }
++    public void selectProject(String projectSearchName,String projectName) throws InterruptedException {
++        projectSearch.click();
++        Thread.sleep(500);
++        projectTypeToSearch.sendKeys(projectSearchName);
++        Thread.sleep(1000);
++        for (WebElement project: allProjectNamesAfterSearch){
++            if(BrowserUtils.getText(project).equals(projectName)){
++                project.click();
++                // BrowserUtils.selectBy(customer,customerName, "text");
++                break;
++            }
++        }
++    }
++    public void clickAddItem(){
++        addItemButton.click();
++    }
++    public void selectItem(String itemName) throws InterruptedException {
++        clickAddItem();
++        Thread.sleep(2000);
++        for (WebElement item: allItems){
++            if(BrowserUtils.getText(item).contains(itemName)){
++                item.click();
++                System.out.println(item.getText());
++                break;
++            }
++        }
++    }
++    public void clickBlueButton(WebDriver driver){
++       BrowserUtils.scrollWithJS(driver, blueButton);
++       blueButton.click();
++
++    }
++}
+Index: src/test/java/pages/LoginPage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pages;\n\nimport org.junit.Assert;\nimport org.openqa.selenium.WebDriver;\nimport org.openqa.selenium.WebElement;\nimport org.openqa.selenium.support.FindBy;\nimport org.openqa.selenium.support.PageFactory;\n\npublic class LoginPage {\n    public LoginPage(WebDriver driver) {\n        PageFactory.initElements(driver, this);\n    }\n\n    @FindBy(id = \"email\")\n    WebElement email;\n\n    @FindBy(id = \"password\")\n    WebElement password;\n\n    @FindBy(xpath = \"//button[@type='submit']\")\n    WebElement loginButton;\n\n    public void login(String email,String password){\n        this.email.sendKeys(email);\n        this.password.sendKeys(password);\n        loginButton.click();\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/pages/LoginPage.java b/src/test/java/pages/LoginPage.java
+--- a/src/test/java/pages/LoginPage.java	(revision cbba5b63f30f6084ad685b05a375913b023dcfb3)
++++ b/src/test/java/pages/LoginPage.java	(date 1709585185796)
+@@ -5,6 +5,7 @@
+ import org.openqa.selenium.WebElement;
+ import org.openqa.selenium.support.FindBy;
+ import org.openqa.selenium.support.PageFactory;
++import utils.BrowserUtils;
+ 
+ public class LoginPage {
+     public LoginPage(WebDriver driver) {
+@@ -19,11 +20,23 @@
+ 
+     @FindBy(xpath = "//button[@type='submit']")
+     WebElement loginButton;
++    @FindBy(xpath = "//div[@class='text-center alert alert-danger']")
++    WebElement errorMessage;
+ 
+-    public void login(String email,String password){
++    public void login(String email, String password) {
+         this.email.sendKeys(email);
+         this.password.sendKeys(password);
+         loginButton.click();
+     }
+ 
++    public boolean isLoginVisible() {
++        return loginButton.isDisplayed();
++    }
++
++    public void errorMessageAndColor(String expectedMessage, String expectedColor) {
++        Assert.assertEquals(expectedMessage, BrowserUtils.getText(errorMessage));
++        Assert.assertEquals(expectedColor, errorMessage.getCssValue("color"));
++
++    }
+ }
++
+Index: src/test/resources/features/VerifySubmodules.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/resources/features/VerifySubmodules.feature b/src/test/resources/features/VerifySubmodules.feature
+new file mode 100644
+--- /dev/null	(date 1709585185798)
++++ b/src/test/resources/features/VerifySubmodules.feature	(date 1709585185798)
+@@ -0,0 +1,10 @@
++Feature: Verifying submodules and their quantity and order
++
++  Background:
++    Given employee navigate to the url
++
++    Scenario:
++      When employee enters correct login and password
++      And the employee clicks on Sales button in navigation menu from lest side
++      And Employee can see all submodules and check their quantity
++      Then Employee can verify the right order of given submodules
+\ No newline at end of file

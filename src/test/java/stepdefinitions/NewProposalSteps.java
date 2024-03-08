@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import pages.MainPage;
 import pages.ProposalPage;
+import utils.ConfigReader;
 import utils.DriverHelper;
 
 import java.util.Map;
@@ -16,6 +17,12 @@ public class NewProposalSteps {
     WebDriver driver = DriverHelper.getDriver();
     MainPage mainPage = new MainPage(driver);
     ProposalPage proposalPage = new ProposalPage(driver);
+
+    @Given("navigate to Techtorial CRM url")
+    public void navigateToTechtorialCRMUrl() {
+        String url = ConfigReader.readProperty("techtorial_CRM_URL");
+        driver.get(url);
+    }
 
     @When("User Clicks {string} Module from left side navigation menu and {string} module")
     public void user_clicks_module_from_left_side_navigation_menu_and_module(String moduleName, String salesOption) throws InterruptedException {
@@ -52,7 +59,7 @@ public class NewProposalSteps {
 
     @When("user clicks Add Item button and selects {string} from the dropdown list")
     public void user_clicks_button_and_selects_from_the_dropdown_list(String itemName) throws InterruptedException {
-        proposalPage.selectItem(itemName);
+        proposalPage.selectItem(itemName, driver);
     }
 
     @When("user clicks the blue check button to add the item")
@@ -92,12 +99,14 @@ public class NewProposalSteps {
         proposalPage.selectRelated(allDetails.get("related"));
         proposalPage.selectCustomer(allDetails.get("customerSearch"),allDetails.get("customer"));
         proposalPage.selectProject(allDetails.get("projectSearch"), allDetails.get("project"));
-        proposalPage.selectItem(allDetails.get("itemSelect1"));
+        proposalPage.selectItem(allDetails.get("itemSelect1"), driver);
         proposalPage.clickBlueButton(driver);
-        proposalPage.selectItem(allDetails.get("itemSelect2"));
+        proposalPage.selectItem(allDetails.get("itemSelect2"), driver);
         proposalPage.changeQuantity(allDetails.get("quantity"));
         proposalPage.clickBlueButton(driver);
         Assert.assertEquals(allDetails.get("total"), proposalPage.getTotal());
         proposalPage.clickSaveAndSend();
     }
+
+
 }

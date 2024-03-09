@@ -9,18 +9,20 @@ import utils.ConfigReader;
 import utils.DriverHelper;
 
 public class Hook {
-//    public WebDriver driver;
-//
+   public WebDriver driver;
+
 //    @Before// it must be imported from io.cucumber NOT from JUNIT ****
 //    public void setup(){
 //        driver= DriverHelper.getDriver();
-//        driver.get(ConfigReader.readProperty("techtorial_CRM_URL"));
+//        driver.get(ConfigReader.readProperty("employee_techtorial_CRM_URL"));
 //        //driver.get(ConfigReader.readProperty("smart_bear_url"));
 //    }
-//
-//    @After
-//    public void tearDown(Scenario scenario){
-//        //BrowserUtils.getScreenShotWithCucumber(driver, scenario);
-//        driver.quit();
-//    }
+
+    @After
+    public void tearDown(Scenario scenario){
+
+        driver= DriverHelper.getDriver();
+        BrowserUtils.getScreenShotWithCucumber(driver, scenario);
+        driver.quit();
+    }
 }

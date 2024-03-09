@@ -37,12 +37,31 @@ public class LoginSteps {
         Assert.assertTrue(driver.getTitle().trim().contains(expectedTitle));
     }
     @When("User provides {string} and {string} to the loginPage")
-    public void user_provides_and_to_the_login_page(String email, String password) {
+    public void user_provides_and_to_the_login_page(String email, String password) throws InterruptedException {
+        Thread.sleep(1000);
         loginPage.login(email, password);
     }
     @Then("User validates the title {string} and {string} from loginPage")
     public void user_validates_the_title_and_from_login_page(String errorMessage, String expectedColor) {
         loginPage.errorMessageAndColor(errorMessage,expectedColor);
+    }
+
+
+    @Given("User login as {string}")
+    public void user_login_as(String userInfo) {
+        loginPage.login(userInfo);
+    }
+
+    @Given("User navigates to the {string} url")
+    public void user_navigates_to_the_url(String URL) {
+        switch (URL){
+            case "employee_url":
+                driver.navigate().to(ConfigReader.readProperty("employee_techtorial_CRM_URL"));
+                break;
+            case  "customer_url":
+                driver.navigate().to(ConfigReader.readProperty("customer_techtorial_url"));
+                break;
+        }
     }
 
 

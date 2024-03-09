@@ -122,7 +122,8 @@ public class ProposalVerificationPage {
         }
     }
 
-    public void verifyFourHElement() {
+    public void verifyFourHElement() throws InterruptedException {
+        Thread.sleep(1000);
         Assert.assertTrue(h4.isDisplayed());
     }
 

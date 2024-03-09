@@ -1,11 +1,12 @@
+@regression
 Feature: Proposal Acceptance Workflow
 
   Scenario: Create a new proposal with specified details datatable
-    Given navigate to Techtorial CRM url
-    When User provides email_address and password to the loginPage
+    And  User navigates to the "employee_url" url
+    And User login as "employee"
     When User Clicks "Sales" Module from left side navigation menu and "Proposals" module
     And user creates new proposal with following data
-      | subject        | Valia_Proposal_Test_TC5        |
+      | subject        | almaz_Proposal_Test_TC5        |
       | related        | Customer                       |
       | customerSearch | Apple                          |
       | customer       | Apple LLC                      |
@@ -19,15 +20,15 @@ Feature: Proposal Acceptance Workflow
     Then Find created Proposal and verify that its status is "Sent"
 
   Scenario: Verify Proposal Acceptance Workflow
-    Given the user navigates to the customer URL
-    And the user logs in with valid credentials
+    And  User navigates to the "customer_url" url
+    And User login as "customer"
     Then the page title should be "Apple LLC"
     When the user clicks on the "Proposals" menu in the top navigation
-    And the proposal with title "Valia_Proposal_Test_TC5" is in the list
+    And the proposal with title "almaz_Proposal_Test_TC5" is in the list
     And the total for the proposal is "$300.30"
-    And the user saves the proposal ID as "Valia_Proposal_Test_TC5" and clicks on the proposal with Proposal # equal to saved proposal id
+    And the user saves the proposal ID as "almaz_Proposal_Test_TC5" and clicks on the proposal with Proposal # equal to saved proposal id
     Then the proposal should match the value in the new page h4 element
-    And the page title should be "Valia_Proposal_Test_TC5"
+    And the page title should be "almaz_Proposal_Test_TC5"
     And the first item in the table should be "Asus Monitor"
     And the second item in the table should be "Ethernet Cable"
     And the page should have an "Accept" button

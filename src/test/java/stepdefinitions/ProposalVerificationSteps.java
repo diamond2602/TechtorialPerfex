@@ -20,7 +20,7 @@ public class ProposalVerificationSteps {
 
     @Given("the user navigates to the customer URL")
     public void theUserNavigatesToTheCustomerURL() {
-        String url = ConfigReader.readProperty("customer_CRM_URL");
+        String url = ConfigReader.readProperty("customer_techtorial_url");
         driver.get(url);
     }
 
@@ -60,7 +60,7 @@ public class ProposalVerificationSteps {
     }
 
     @Then("the proposal should match the value in the new page h4 element")
-    public void theProposalShouldMatchTheValueInTheNewPageSHElement() {
+    public void theProposalShouldMatchTheValueInTheNewPageSHElement() throws InterruptedException {
         proposalVerificationPage.verifyFourHElement();
     }
 

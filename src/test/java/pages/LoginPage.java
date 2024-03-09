@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utils.BrowserUtils;
+import utils.ConfigReader;
 
 public class LoginPage {
     public LoginPage(WebDriver driver) {
@@ -38,5 +39,30 @@ public class LoginPage {
         Assert.assertEquals(expectedColor, errorMessage.getCssValue("color"));
 
     }
+
+    public void login(String userInfo){
+        switch (userInfo){
+            case "employee":
+                email.sendKeys(ConfigReader.readProperty("employee_username"));
+                password.sendKeys(ConfigReader.readProperty("employee_password"));
+                break;
+            case "customer":
+                email.sendKeys(ConfigReader.readProperty("customer_username"));
+                password.sendKeys(ConfigReader.readProperty("customer_password"));
+                break;
+
+        }loginButton.click();
+    }
+//    public void selectUrl(String URL){
+//        switch (URL){
+//            case "employee_url":
+//                driver.navigate().to(ConfigReader.readProperty("employee_techtorial_CRM_URL"));
+//                break;
+//            case  "customer_url":
+//                driver.navigate().to(ConfigReader.readProperty("customer_techtorial_url"));
+//                break;
+//        }
+//    }
+
 }
 

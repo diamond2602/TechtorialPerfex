@@ -1,11 +1,12 @@
+@regression
 Feature: Proposal Acceptance Workflow
 
   Scenario: Create a new proposal with specified details datatable
-    Given navigate to Techtorial CRM url
-    When User provides email_address and password to the loginPage
+    And  User navigates to the "employee_url" url
+    And User login as "employee"
     When User Clicks "Sales" Module from left side navigation menu and "Proposals" module
     And user creates new proposal with following data
-      | subject        | Valia_Proposal_Test_TC5        |
+      | subject        | almaz_Proposal_Test_TC5        |
       | related        | Customer                       |
       | customerSearch | Apple                          |
       | customer       | Apple LLC                      |

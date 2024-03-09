@@ -1,13 +1,19 @@
-Feature: Testing the Login Functionality of smartbear Website
+@regression
+Feature: Testing the Login Functionality of Techtorial CRM Website
 
   Background: Validates title and visibility of log_in
-    Given User validates the title is 'Techtorial CRM - Login' from LoginPage
-    And User validates the Log In is visible on the page
+
+    And  User navigates to the "employee_url" url
+
+
+ And User validates the Log In is visible on the page
 
   Scenario: Happy Path Login Functionality(Positive) for Techtorial CRM
 #    Given User validates the title is 'Techtorial CRM - Login' from LoginPage
 #    And User validates the Log In is visible on the page
-    When User provides email_address and password to the loginPage
+   # When User provides email_address and password to the loginPage
+    And User validates the title is 'Techtorial CRM - Login' from LoginPage
+    And User login as "employee"
     Then User validates the title 'Dashboard' from MainPage
 
 

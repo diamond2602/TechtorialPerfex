@@ -63,7 +63,7 @@ public class NewProposalSteps {
     }
 
     @When("user clicks the blue check button to add the item")
-    public void user_clicks_the_blue_check_button_to_add_the_item() {
+    public void user_clicks_the_blue_check_button_to_add_the_item() throws InterruptedException {
         proposalPage.clickBlueButton(driver);
     }
 
@@ -79,7 +79,7 @@ public class NewProposalSteps {
     }
 
     @Then("user clicks Save & Send button")
-    public void user_clicks_button() {
+    public void user_clicks_button() throws InterruptedException {
         proposalPage.clickSaveAndSend();
     }
 

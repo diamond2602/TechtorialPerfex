@@ -2,6 +2,8 @@ package pages;
 
 import io.cucumber.java.en_old.Ac;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -83,8 +85,14 @@ public class ProposalPage {
     @FindBy(xpath = "//select[@class='form-control input-sm']")
     WebElement tableLengthList;
 
-    @FindBy(xpath = "//td//span[contains(text(), 'Accepted')]")
-    List<WebElement> acceptedStatusesList;
+    @FindBy(xpath = "//th[contains(text(), 'Status')]//..//..//..//..//tbody//tr//td[10]//span")
+    List<WebElement> allStatusesList;
+
+    @FindBy(xpath= "//th[contains(text(), 'Subject')]//..//..//..//..//tbody//tr//td[2]//a")
+    List<WebElement> subjectProposalsName;
+
+    @FindBy(xpath = "//div[@class = 'col-md-3']//span")
+    WebElement statusWhenClickedOnProposal;
 
     public void selectRelated(String relatedChoise) {
         BrowserUtils.selectBy(related, relatedChoise, "text");
@@ -125,9 +133,7 @@ public class ProposalPage {
     }
 
     public void selectItem(String itemName, WebDriver driver) throws InterruptedException {
-        Thread.sleep(2000);
         clickAddItem(driver);
-        Thread.sleep(1000);
         for (WebElement item : allItems) {
             if (BrowserUtils.getText(item).contains(itemName)) {
                 item.click();
@@ -136,8 +142,9 @@ public class ProposalPage {
             }
         }
     }
-    public void clickBlueButton(WebDriver driver){
+    public void clickBlueButton(WebDriver driver) throws InterruptedException {
        BrowserUtils.scrollWithJS(driver, blueButton);
+       Thread.sleep(3000);
        blueButton.click();
 
     }
@@ -194,14 +201,26 @@ public class ProposalPage {
     }
 
     public void setTableLengthList (String allOption){
-
         BrowserUtils.selectBy(tableLengthList, allOption, "text" );
     }
-    public void verifiedAcceptedStatus(String acceptedStatus) {
-        for (WebElement status : acceptedStatusesList) {
-                Assert.assertEquals(acceptedStatus, BrowserUtils.getText(status));
+
+    public void locateAndVerifyStatus(String nameOfPromotion, String acceptedStatus1) throws InterruptedException {
+        boolean proposalExist = false;
+        for(WebElement name: subjectProposalsName){
+            Thread.sleep(2000);
+           if (BrowserUtils.getText(name).equals(nameOfPromotion)){
+               for(WebElement status: allStatusesList){
+                   Assert.assertEquals(acceptedStatus1, BrowserUtils.getText(status));
+                   break;
+               }
+               name.click();
+              Thread.sleep(3000);
+            Assert.assertEquals(acceptedStatus1, BrowserUtils.getText(statusWhenClickedOnProposal));
+              proposalExist= true;
+            break;
+           }else {
+               Assert.assertTrue("Proposal not found: " + nameOfPromotion, proposalExist);
+           }
         }
-
     }
-
-    }
+}

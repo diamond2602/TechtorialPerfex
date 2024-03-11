@@ -31,4 +31,13 @@ public class DeleteProposal {
 
     }
 
+    public void deleteParticularPromotion(WebDriver driver) throws InterruptedException {
+        moreDropdown.click();
+        delete.click();
+        Alert alert = driver.switchTo().alert();
+        Thread.sleep(3000);
+        alert.accept();
+        Thread.sleep(3000);
+    }
+
 }

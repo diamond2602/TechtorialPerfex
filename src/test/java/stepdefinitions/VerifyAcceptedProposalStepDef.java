@@ -4,6 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
+import pages.DeleteProposal;
 import pages.ProposalPage;
 import utils.ConfigReader;
 import utils.DriverHelper;
@@ -12,6 +13,8 @@ public class VerifyAcceptedProposalStepDef {
 
     WebDriver driver = DriverHelper.getDriver();
     ProposalPage proposalPage = new ProposalPage(driver);
+
+    DeleteProposal deleteProposal = new DeleteProposal(driver);
 
     @Given("User navigates to employeeURL")
     public void user_navigates_to_employee_url() {
@@ -22,11 +25,15 @@ public class VerifyAcceptedProposalStepDef {
         proposalPage.setTableLengthList(tableLength);
 
     }
-    @Then("User verify that status is {string} for approved proposals")
-    public void user_verify_that_status_is_for_approved_proposals(String statusAccepted) {
-        proposalPage.verifiedAcceptedStatus(statusAccepted);
-
+    @Then("User verify that status for proposal {string} is {string}")
+    public void user_verify_that_status_for_proposal_is(String nameOfProposal, String acceptedStatus) throws InterruptedException {
+        proposalPage.locateAndVerifyStatus(nameOfProposal, acceptedStatus);
     }
+    @Then("User clicks on More button, then Delete and press click Ok on the alert")
+    public void user_clicks_on_more_button_then_delete_and_press_click_ok_on_the_alert() throws InterruptedException {
+      deleteProposal.deleteParticularPromotion(driver);
+    }
+
 
 
 }

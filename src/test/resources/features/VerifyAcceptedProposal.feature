@@ -40,14 +40,14 @@ Feature: Testing approved proposal as employee
 
   Scenario: Happy path for approved proposal status
     Given User navigates to employeeURL
-    When User provides email_address and password to the loginPage
+    When User login as "employee"
     When User Clicks "Sales" Module from left side navigation menu and "Proposals" module
     And User Set Table length to "All" from drop down menu that is next to Export button on top of table
    Then User verify that status for proposal "cristian85_Proposal_Test_TC7" is "Accepted"
 
   Scenario: Delete last added proposal
     Given User navigates to employeeURL
-    When User provides email_address and password to the loginPage
+    When User login as "employee"
     When User Clicks "Sales" Module from left side navigation menu and "Proposals" module
     And User Set Table length to "All" from drop down menu that is next to Export button on top of table
     Then User verify that status for proposal "cristian85_Proposal_Test_TC7" is "Accepted"

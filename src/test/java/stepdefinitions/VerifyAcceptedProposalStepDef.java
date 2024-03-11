@@ -18,7 +18,7 @@ public class VerifyAcceptedProposalStepDef {
 
     @Given("User navigates to employeeURL")
     public void user_navigates_to_employee_url() {
-        driver.get(ConfigReader.readProperty("employeeURL"));
+        driver.get(ConfigReader.readProperty("employee_techtorial_CRM_URL"));
     }
     @When("User Set Table length to {string} from drop down menu that is next to Export button on top of table")
     public void user_set_table_length_to_from_drop_down_menu_that_is_next_to_export_button_on_top_of_table(String tableLength) {

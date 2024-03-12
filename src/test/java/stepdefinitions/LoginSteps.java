@@ -27,11 +27,7 @@ public class LoginSteps {
     public void user_validates_the_log_in_is_visible_on_the_page() {
         Assert.assertTrue(loginPage.isLoginVisible());
     }
-    @When("User provides email_address and password to the loginPage")
-    public void user_provides_email_address_and_password_to_the_login_page() {
-        loginPage.login(ConfigReader.readProperty("email_address"),
-                ConfigReader.readProperty("password"));
-    }
+
     @Then("User validates the title {string} from MainPage")
     public void user_validates_the_title_from_main_page(String expectedTitle) {
         Assert.assertTrue(driver.getTitle().trim().contains(expectedTitle));

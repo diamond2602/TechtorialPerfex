@@ -39,7 +39,7 @@ Feature: Proposal Acceptance Workflow
     Then a "Accepted" status label with a green background should appear next to the proposal ID
 
   Scenario: Delete last added proposal
-    Given navigate to Techtorial CRM url
-    When User provides email_address and password to the loginPage
+    And  User navigates to the "employee_url" url
+    And User login as "employee"
     When User Clicks "Sales" Module from left side navigation menu and "Proposals" module
     Then Click first Proposal number, More button, Delete and press OK in the confirmation pop up

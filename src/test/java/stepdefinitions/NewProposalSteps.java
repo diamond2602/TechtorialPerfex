@@ -18,11 +18,7 @@ public class NewProposalSteps {
     MainPage mainPage = new MainPage(driver);
     ProposalPage proposalPage = new ProposalPage(driver);
 
-    @Given("navigate to Techtorial CRM url")
-    public void navigateToTechtorialCRMUrl() {
-        String url = ConfigReader.readProperty("techtorial_CRM_URL");
-        driver.get(url);
-    }
+
 
     @When("User Clicks {string} Module from left side navigation menu and {string} module")
     public void user_clicks_module_from_left_side_navigation_menu_and_module(String moduleName, String salesOption) throws InterruptedException {
@@ -63,7 +59,7 @@ public class NewProposalSteps {
     }
 
     @When("user clicks the blue check button to add the item")
-    public void user_clicks_the_blue_check_button_to_add_the_item() {
+    public void user_clicks_the_blue_check_button_to_add_the_item() throws InterruptedException {
         proposalPage.clickBlueButton(driver);
     }
 
@@ -79,7 +75,7 @@ public class NewProposalSteps {
     }
 
     @Then("user clicks Save & Send button")
-    public void user_clicks_button() {
+    public void user_clicks_button() throws InterruptedException {
         proposalPage.clickSaveAndSend();
     }
 

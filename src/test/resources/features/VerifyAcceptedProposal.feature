@@ -1,12 +1,12 @@
-@regression
-Feature: Proposal Acceptance Workflow
+Feature: Testing approved proposal as employee
+
 
   Scenario: Create a new proposal with specified details datatable
     And  User navigates to the "employee_url" url
     And User login as "employee"
     When User Clicks "Sales" Module from left side navigation menu and "Proposals" module
     And user creates new proposal with following data
-      | subject        | almaz_Proposal_Test_TC5        |
+      | subject        | cristian85_Proposal_Test_TC7        |
       | related        | Customer                       |
       | customerSearch | Apple                          |
       | customer       | Apple LLC                      |
@@ -24,11 +24,11 @@ Feature: Proposal Acceptance Workflow
     And User login as "customer"
     Then the page title should be "Apple LLC"
     When the user clicks on the "Proposals" menu in the top navigation
-    And the proposal with title "almaz_Proposal_Test_TC5" is in the list
+    And the proposal with title "cristian85_Proposal_Test_TC7" is in the list
     And the total for the proposal is "$300.30"
-    And the user saves the proposal ID as "almaz_Proposal_Test_TC5" and clicks on the proposal with Proposal # equal to saved proposal id
+    And the user saves the proposal ID as "cristian85_Proposal_Test_TC7" and clicks on the proposal with Proposal # equal to saved proposal id
     Then the proposal should match the value in the new page h4 element
-    And the page title should be "almaz_Proposal_Test_TC5"
+    And the page title should be "cristian85_Proposal_Test_TC7"
     And the first item in the table should be "Asus Monitor"
     And the second item in the table should be "Ethernet Cable"
     And the page should have an "Accept" button
@@ -38,8 +38,17 @@ Feature: Proposal Acceptance Workflow
     And the user draws a signature in the canvas and clicks the "Sign" button again
     Then a "Accepted" status label with a green background should appear next to the proposal ID
 
+  Scenario: Happy path for approved proposal status
+    And  User navigates to the "employee_url" url
+    When User login as "employee"
+    When User Clicks "Sales" Module from left side navigation menu and "Proposals" module
+    And User Set Table length to "All" from drop down menu that is next to Export button on top of table
+   Then User verify that status for proposal "cristian85_Proposal_Test_TC7" is "Accepted"
+
   Scenario: Delete last added proposal
     And  User navigates to the "employee_url" url
-    And User login as "employee"
+    When User login as "employee"
     When User Clicks "Sales" Module from left side navigation menu and "Proposals" module
-    Then Click first Proposal number, More button, Delete and press OK in the confirmation pop up
+    And User Set Table length to "All" from drop down menu that is next to Export button on top of table
+    Then User verify that status for proposal "cristian85_Proposal_Test_TC7" is "Accepted"
+    And User clicks on More button, then Delete and press click Ok on the alert

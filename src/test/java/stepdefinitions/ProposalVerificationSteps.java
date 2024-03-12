@@ -109,7 +109,7 @@ public class ProposalVerificationSteps {
     }
 
     @When("Click first Proposal number, More button, Delete and press OK in the confirmation pop up")
-    public void click_first_proposal_number_more_button_and_delete() {
+    public void click_first_proposal_number_more_button_and_delete() throws InterruptedException {
         deleteProposal.deleteProposal(driver);
 
     }

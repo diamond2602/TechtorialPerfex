@@ -20,55 +20,55 @@ public class DriverHelper {
     //I make my constructor private because I do not want anyone to create an object
     //and manipulate my driver from this class.
 
-    public static WebDriver getDriver() {
-        if (driver==null|| ((RemoteWebDriver)driver).getSessionId()==null) {
-            String browser="chrome";
-            switch (browser){
-                case "chrome":
-                    driver= new ChromeDriver();
-                    break;
-                case "firefox":
-                    driver=new FirefoxDriver();
-                    break;
-                case "edge":
-                    driver=new EdgeDriver();
-                    break;
-                default:
-                    driver=new ChromeDriver();
-            }
-            driver.manage().window().maximize();
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            driver.manage().deleteAllCookies();//make you fresh start
-        }
-        return driver;
+    // public static WebDriver getDriver() {
+    //     if (driver==null|| ((RemoteWebDriver)driver).getSessionId()==null) {
+    //         String browser="chrome";
+    //         switch (browser){
+    //             case "chrome":
+    //                 driver= new ChromeDriver();
+    //                 break;
+    //             case "firefox":
+    //                 driver=new FirefoxDriver();
+    //                 break;
+    //             case "edge":
+    //                 driver=new EdgeDriver();
+    //                 break;
+    //             default:
+    //                 driver=new ChromeDriver();
+    //         }
+    //         driver.manage().window().maximize();
+    //         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    //         driver.manage().deleteAllCookies();//make you fresh start
+    //     }
+    //     return driver;
 
-//        if(driver==null|| ((RemoteWebDriver)driver).getSessionId()==null){
-//            String browser="chrome";
-//
-//            switch (browser){
-//
-//                case "chrome":
-//                    String hubURL = "http://172.31.92.147:4444";
-//                    ChromeOptions options = new ChromeOptions();
-//                    try {
-//                        driver = new  RemoteWebDriver(new URL(hubURL),options);
-//                    } catch (MalformedURLException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                    break;
-//                case "firefox":
-//                    driver = new FirefoxDriver();
-//                    break;
-//                default:
-//                    ChromeOptions options1 = new ChromeOptions();
-//                    options1.addArguments("--remote-allow-origins=*");
-//                    driver = new ChromeDriver(options1);
-//                    break;
-//            }
-//            driver.manage().window().maximize();
-//            //   driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-//        }
-//        return driver;
+       if(driver==null|| ((RemoteWebDriver)driver).getSessionId()==null){
+           String browser="chrome";
+
+           switch (browser){
+
+               case "chrome":
+                   String hubURL = "http://35.171.3.237:4444";
+                   ChromeOptions options = new ChromeOptions();
+                   try {
+                       driver = new  RemoteWebDriver(new URL(hubURL),options);
+                   } catch (MalformedURLException e) {
+                       throw new RuntimeException(e);
+                   }
+                   break;
+               case "firefox":
+                   driver = new FirefoxDriver();
+                   break;
+               default:
+                   ChromeOptions options1 = new ChromeOptions();
+                   options1.addArguments("--remote-allow-origins=*");
+                   driver = new ChromeDriver(options1);
+                   break;
+           }
+           driver.manage().window().maximize();
+           //   driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+       }
+       return driver;
 
     }
 }

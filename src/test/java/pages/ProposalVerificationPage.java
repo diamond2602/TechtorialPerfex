@@ -94,17 +94,8 @@ public class ProposalVerificationPage {
         }
     }
 
-    public void saveAndClickProposalId(String proposalId) {
+    public void saveAndClickProposalId(String proposalId){
 
-//        for (int i =1;i<= rows.size();i++) {
-//            WebElement subjectElement = rows.get(i).findElement(By.cssSelector(".td-proposal-url-subject"));
-//            if (subjectElement.getText().equals(proposalId)) {
-//                WebElement proposalNumberElement = rows.get(i).findElement(By.cssSelector(".td-proposal-url"));
-//                proposalId = proposalNumberElement.getText();
-//                System.out.println("Proposal number found: " + proposalId);
-//                break;
-//            }
-//        }
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfAllElements(proposalList));
         WebElement targetProposal = null;

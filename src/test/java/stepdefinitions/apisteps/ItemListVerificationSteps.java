@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.junit.Assert;
 import utils.ConfigReader;
 import java.util.List;
 
@@ -46,16 +47,15 @@ public class ItemListVerificationSteps {
     @When("verify the item with ID {int} have the name {string}")
     public void verify_the_item_with_id_have_the_name(int itemID, String itemName) {
         List<String> ids = response.jsonPath().getList("id");
+        boolean found = false;
         for (String id : ids) {
             if (Integer.parseInt(id) == itemID) {
                 String name = response.jsonPath().getString("name");
-                if (name != null && name.contains(itemName)) {
-                    System.out.println("Validation passed: Name contains '(10.00) Ethernet Cable'");
-                } else {
-                    System.out.println("Validation failed: Name does not contain '(10.00) Ethernet Cable'");
+                    Assert.assertTrue("Item with ID " + itemID + " should have the name '" + itemName + "'", name.contains(itemName));
+                    found = true;
+                    break;
                 }
-                break;
             }
+            Assert.assertTrue("Item with ID " + itemID + " was not found in the response", found);
         }
-    }
 }
